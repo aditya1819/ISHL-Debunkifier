@@ -9,3 +9,6 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/questions', [QuestionApiController::class, 'store']);
+Route::get('/question', function () {
+    return response()->json(['question' => 'What is Laravel?']);
+});

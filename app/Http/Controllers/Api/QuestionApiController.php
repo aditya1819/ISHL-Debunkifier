@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -30,23 +31,36 @@ class QuestionApiController extends Controller
             ], 422);
         }
 
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('questions', 'public');
-            $imagePath = basename($imagePath); // Store only filename
+        try {
+            $imagePath = null;
+            if ($request->hasFile('image')) {
+                // Use Laravel's Storage facade instead of direct file handling
+                $file = $request->file('image');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                
+                // Store file using Storage facade
+                $path = $file->storeAs('questions', $filename, 'public');
+                $imagePath = $filename; // Store only filename
+            }
+
+            $question = Question::create([
+                'image' => $imagePath,
+                'possible_reasons' => $request->possible_reasons,
+                'section_count' => $request->section_count,
+                'section_data' => $request->section_data
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Question created successfully',
+                'data' => $question
+            ], 201);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error creating question: ' . $e->getMessage()
+            ], 500);
         }
-
-        $question = Question::create([
-            'image' => $imagePath,
-            'possible_reasons' => $request->possible_reasons,
-            'section_count' => $request->section_count,
-            'section_data' => $request->section_data
-        ]);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Question created successfully',
-            'data' => $question
-        ], 201);
     }
 }

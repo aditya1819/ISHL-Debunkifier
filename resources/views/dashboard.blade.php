@@ -15,7 +15,7 @@
           Tutorial
         </a>
         
-        <a href="{{ route('exercise') }}" 
+        <a href="{{ route('exercise.index') }}" 
            class="bg-green-700 hover:bg-green-500 text-white text-xl font-bold py-4 px-6 rounded-lg text-center transition duration-300 ease-in-out transform hover:scale-105">
           Exercise
         </a>

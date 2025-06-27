@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ExerciseController;
+use App\Http\Controllers\ExerciseQuestionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TutorialController;
@@ -17,9 +19,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/tutorial/question/{question}/submit', [QuestionController::class, 'submit'])->name('tutorial.question.submit');
     
     // Placeholder routes for future development
-    Route::get('/exercise', function () {
-        return view('coming-soon', ['title' => 'Exercise']);
-    })->name('exercise');
+    Route::get('/exercise', [ExerciseController::class,'index'])->name('exercise.index');
+    Route::get('/exercise/question/{question}', [ExerciseQuestionController::class,'show'])->name('exercise.question');
     
     Route::get('/forum', function () {
         return view('coming-soon', ['title' => 'Forum']);

@@ -12,4 +12,10 @@ class ExerciseController extends Controller
         $questions = Question::with(['userAttempt'])->get();
         return view('exercise.index', compact('questions'));
     }
+
+    public function expertSolution($questionId)
+    {
+        return view('exercise.expert-solution');
+    }
+
 }

@@ -27,9 +27,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/exercise/question/{question}/submit', [QuestionApiController::class, 'submit'])
         ->middleware(['auth'])
         ->name('exercise.question.submit');
+
+    Route::get('/exercise/{question}/expert-solution', [ExerciseController::class, 'expertSolution'])->name('exercise.expert-solution');
     
     Route::get('/forum', function () {
-        return view('coming-soon', ['title' => 'Forum']);
+        return view('coming-soon', ['title' => 'Forum', 'pageDescription' => 'Community Forum']);
     })->name('forum');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

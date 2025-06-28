@@ -112,6 +112,9 @@ class QuestionApiController extends Controller
             ['result' => $isPass ? 'pass' : 'fail', 'attempted_at' => now()]
         );
 
-        return redirect()->back()->with('success', 'Your attempt has been submitted.');
+        return response()->json([
+            'status' => $isPass ? 'pass' : 'fail',
+            'message' => $isPass ? 'Congratulations! You passed.' : 'Sorry, you did not pass.',
+        ]);
     }
 }

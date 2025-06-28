@@ -26,4 +26,9 @@ class Question extends Model
     {
         return $this->image ? asset('storage/questions/' . $this->image) : null;
     }
+
+    public function attempts()
+    {
+        return $this->hasMany(QuestionAttempt::class);
+    }
 }

@@ -31,4 +31,9 @@ class Question extends Model
     {
         return $this->hasMany(QuestionAttempt::class);
     }
+
+    public function userAttempt()
+    {
+        return $this->hasOne(QuestionAttempt::class)->where('user_id', auth()->id());
+    }
 }

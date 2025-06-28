@@ -20,36 +20,36 @@
                     @else
                       <div class="grid gap-4 bg-gray-700 p-4 rounded-lg">
                           @foreach($questions as $question)
-                              <div class="rounded-lg p-4 hover:shadow-xl transition-shadow">
-                                  <a href="{{ route('exercise.question', $question) }}"
-                                    class="block hover:text-blue-600">
-                                      <div class="flex items-center justify-between">
-                                          <div>
-                                              <h3 class="text-xl font-medium text-white">Question #{{ $question->id }}</h3>
-                                              <p class="text-gray-300 text-sm">{{ $question->section_count }} sections</p>
-                                          </div>
-                                          <div class="flex items-center gap-4">
-                                              <div class="text-right">
-                                                   <span class="text-sm font-medium px-2 py-1 rounded-full
-                                                      @if(strtolower('easy') == 'easy') 
-                                                          bg-green-100 text-green-800
-                                                      @elseif(strtolower('') == 'medium') 
-                                                          bg-yellow-100 text-yellow-800
-                                                      @elseif(strtolower('hard') == 'hard') 
-                                                          bg-red-100 text-red-800
-                                                      @else 
-                                                          bg-gray-100 text-gray-800
-                                                      @endif">
-                                                      {{ 'Easy' }}
-                                                  </span>
-                                              </div>
-                                              <div class="text-gray-400">
-                                                  →
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </a>
-                              </div>
+                              <div class="rounded-lg p-4 bg-gray-700 shadow hover:shadow-xl transition-shadow">
+                                <a href="{{ route('exercise.question', $question) }}" class="block hover:text-blue-500">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h3 class="text-xl font-medium text-white">Question #{{ $question->id }}</h3>
+                                            <p class="text-gray-300 text-sm">{{ $question->section_count }} sections</p>
+
+                                            @if ($question->userAttempt)
+                                                <p class="text-sm mt-1 p-1 px-2 rounded-lg {{ $question->userAttempt->result === 'pass' ? ' text-green-700 bg-green-200' : 'text-red-700 bg-red-200' }}">
+                                                    <span class="text-sm font-semibold">Attempted: </span>
+                                                    <span class="font-semibold ">
+                                                        {{ ucfirst($question->userAttempt->result) }}
+                                                    </span>
+                                                </p>
+                                            @else
+                                                <p class="text-sm mt-1 p-1 px-2 rounded-lg text-yellow-700 bg-yellow-200">Not attempted yet</p>
+                                            @endif
+                                        </div>
+
+                                        <div class="flex items-center gap-4">
+                                            <div class="text-right">
+                                                <span class="text-sm font-medium px-2 py-1 rounded-full bg-green-100 text-green-800">
+                                                    Easy
+                                                </span>
+                                            </div>
+                                            <div class="text-gray-400">→</div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
                           @endforeach
                       </div>
                     @endif

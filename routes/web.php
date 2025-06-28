@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\QuestionApiController;
 use App\Http\Controllers\ExerciseController;
 use App\Http\Controllers\ExerciseQuestionController;
 use App\Http\Controllers\ProfileController;
@@ -21,6 +22,11 @@ Route::middleware('auth')->group(function () {
     // Placeholder routes for future development
     Route::get('/exercise', [ExerciseController::class,'index'])->name('exercise.index');
     Route::get('/exercise/question/{question}', [ExerciseQuestionController::class,'show'])->name('exercise.question');
+
+    
+    Route::post('/exercise/question/{question}/submit', [QuestionApiController::class, 'submit'])
+        ->middleware(['auth'])
+        ->name('exercise.question.submit');
     
     Route::get('/forum', function () {
         return view('coming-soon', ['title' => 'Forum']);

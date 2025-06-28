@@ -38,7 +38,7 @@
                          <div>
                             <h3 class="text-xl font-semibold mb-4 p-2">Your Answers ({{ $question->section_count }} sections)</h3>
                             
-                            <form method="POST" action="{{ route('tutorial.question.submit', $question) }}" class="space-y-6">
+                            <form method="POST" action="{{ route('exercise.question.submit', $question) }}" class="space-y-6">
                                 @csrf
                                 
                                 <!-- Dynamic Section Forms -->

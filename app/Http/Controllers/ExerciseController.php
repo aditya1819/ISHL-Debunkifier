@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 class ExerciseController extends Controller
 {
     public function index()
-    {
-        $questions = Question::all();
+    {    
+        $questions = Question::with(['userAttempt'])->get();
         return view('exercise.index', compact('questions'));
     }
 }

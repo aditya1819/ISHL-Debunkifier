@@ -7,7 +7,7 @@
     <!-- Content above overlay -->
     <div class="relative flex flex-col items-center justify-center min-h-96 space-y-6 h-full px-4">
       <h1 class="text-7xl font-bold text-white">Welcome to Debunkify</h1>
-      <h1 class="text-3xl font-bold text-white mb-8">Level Up your social media awareness</h1>
+      <span id="typewriter" class="text-3xl font-bold text-white mb-8 whitespace-nowrap overflow-hidden min-h-[2.5rem]"></span>
       
       <div class="flex flex-col space-y-4 w-full max-w-xs">
         <a href="{{ route('tutorial.index') }}" 

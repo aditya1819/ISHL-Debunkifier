@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .typed-cursor {
+    display: inline-block;
+    line-height: 1;
+    vertical-align: bottom;
+    opacity: 0.8;
+    user-select: none;
+    pointer-events: none;
+  }
+}

@@ -31,6 +31,12 @@
                         <!-- Form Section -->
                          <div>
                             <h3 class="text-xl font-semibold mb-4 p-2">Your Answers ({{ $question->section_count }} sections)</h3>
+
+                            <button id="openChecklistModal"
+                                    class="w-full bg-yellow-600 hover:bg-yellow-500 text-white text-lg font-bold py-3 px-4 rounded-lg text-center transition duration-300 ease-in-out transform hover:scale-105 shadow-lg mb-6">
+                                Checklist
+                            </button>
+                            
                             
                             <form id="exercise-form" method="POST" action="{{ route('exercise.question.submit', $question) }}" class="space-y-6">
                                 @csrf
@@ -94,6 +100,28 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+       <!-- Checklist Modal -->
+    <!-- This modal is fixed, covers the screen with an overlay, and centers its content -->
+    <div id="checklistModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-1000 hidden">
+        <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-full lg:w-3/4 max-w-5xl text-white relative">
+            <!-- Close button for the modal -->
+            <button id="closeChecklistModal" class="absolute top-4 right-4 text-gray-300 hover:text-white text-2xl cursor-pointer bg-transparent border-none">&times;</button>
+            <h2 class="text-3xl font-bold mb-4">Checklist Items</h2>
+            <ul class="list-disc list-inside space-y-2 text-xl p-1">
+                <li>Can I verify the source or author from a credible outlet?</li>
+                <li>Does the post use sensational formatting?</li>
+                <li>Am I assuming it's true just because it has many likes, shares, or comments?</li>
+                <li>How do I feel after reading this — angry, scared, excited — and is that clouding my judgment?</li>
+                <li>Have I seen similar claims or visual styles in known misinformation?</li>
+                <li>Did I search key claims or statistics using quotes and find confirmation from multiple trusted sources?</li>
+                <li>What might be the purpose or intent behind this post?</li>
+                <li>Does the post rely on 'experts' or 'sources' without naming them or citing their credentials?</li>
+                <li>Is the content missing citations, dates, or context that would help verify its accuracy?</li>
+                <li>Am I applying a consistent mental checklist instead of relying on gut feeling or intuition?</li>
+            </ul>
         </div>
     </div>
 
@@ -167,6 +195,32 @@
                             <p>Submission failed. Please try again later.</p>
                         </div>
                     `;
+                }
+            });
+        
+            // Modal Logic
+            const openModalBtn = document.getElementById('openChecklistModal');
+            const closeModalBtn = document.getElementById('closeChecklistModal');
+            const checklistModal = document.getElementById('checklistModal');
+
+            // Function to show the modal
+            function showModal() {
+                checklistModal.classList.remove('hidden');
+            }
+
+            // Function to hide the modal
+            function hideModal() {
+                checklistModal.classList.add('hidden');
+            }
+
+            // Event listeners for opening and closing the modal
+            openModalBtn.addEventListener('click', showModal);
+            closeModalBtn.addEventListener('click', hideModal);
+
+            // Close modal if user clicks outside of the modal content
+            checklistModal.addEventListener('click', function(event) {
+                if (event.target === checklistModal) {
+                    hideModal();
                 }
             });
         });

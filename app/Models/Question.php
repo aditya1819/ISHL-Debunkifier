@@ -14,13 +14,19 @@ class Question extends Model
         'possible_reasons',
         'section_count',
         'section_data',
-        'difficulty'
+        'difficulty',
+        'hint',
+        'answer',
+        'disinfo_pattern_card',
+        'feedback',
+        'pause_and_reflect',
     ];
 
     protected $casts = [
         'possible_reasons' => 'array',
         'section_data' => 'array',
-        'difficulty' => 'string'
+        'difficulty' => 'string',
+        'answer' => 'boolean',
     ];
 
     // Accessor to get image URL

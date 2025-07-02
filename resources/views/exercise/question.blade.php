@@ -15,17 +15,26 @@
                         <!-- Image Section -->
                         <div class="lg:col-span-3">
                             <h3 class="text-3xl font-semibold mb-4 p-2">Exercise Question Image</h3>
-                            @if($question->image)
-                                <img src="{{ $question->image_url }}"
-                                     alt="Question Image" 
-                                     class="w-full h-auto rounded-lg border border-gray-200">
-                            @else
-                                <div class="w-full bg-amber-500 rounded-lg shadow-lg  shadow-gray-900 flex items-center justify-center">
-                                    <p class="text-gray-500 m-4 p-4">
-                                        <img class="h-[32rem] rounded-lg  transition duration-300 ease-in-out transform hover:scale-105 shadow-lg shadow-slate-700 hover:shadow-slate-900" src="https://cepr.org/sites/default/files/styles/16_9_small/public/2024-05/AdobeStock_237772243.jpeg"></img>
-                                    </p>
-                                </div>
-                            @endif
+                            <div class="relative"> 
+                                @if($question->image)
+                                    <img src="{{ $question->image_url }}"
+                                        alt="Question Image" 
+                                        class="w-full h-auto rounded-lg border border-gray-200">
+                                @else
+                                    <div class="w-full bg-amber-500 rounded-lg shadow-lg  shadow-gray-900 flex items-center justify-center">
+                                        <p class="text-gray-500 m-4 p-4">
+                                            <img class="h-[32rem] rounded-lg  transition duration-300 ease-in-out transform hover:scale-105 shadow-lg shadow-slate-700 hover:shadow-slate-900" src="https://cepr.org/sites/default/files/styles/16_9_small/public/2024-05/AdobeStock_237772243.jpeg"></img>
+                                        </p>
+                                    </div>
+                                @endif
+
+                                <!-- New Hint Button - now positioned absolutely within the image section -->
+                                <button id="openHintButton"
+                                            class="absolute top-4 right-4 bg-indigo-600 hover:bg-indigo-500 text-white text-lg font-bold py-2 px-4 rounded-lg transition-opacity duration-500 shadow-lg opacity-0 invisible">
+                                        Need Hint?
+                                </button>
+
+                            </div>
 
                             <!-- New text link for reporting offensive questions -->
                             <div class="text-center mt-6">
@@ -36,6 +45,8 @@
                                     </a>
                                 </p>
                             </div>
+
+                            
                         </div>
 
                         <!-- Form Section -->
@@ -79,22 +90,14 @@
                                             </div>
 
                                             <div>
-                                                <label for="reason_{{ $i }}" class="block text-sm font-medium mb-2">
-                                                    Reason
-                                                </label>
-                                                <select name="sections[{{ $i }}][reason]" id="reason_{{ $i }}" 
-                                                        class="w-full bg-gray-500 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                                                    <option value="">Select a reason</option>
-                                                    @foreach($question->possible_reasons as $reason)
-                                                        <option value="{{ $reason }}" {{ old("sections.{$i}.reason") == $reason ? 'selected' : '' }}>
-                                                            {{ $reason }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                @error("sections.{$i}.reason")
-                                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                                @enderror
-                                            </div>
+                                            <label for="reason_3" class="block text-sm font-medium mb-2">
+                                                Reason
+                                            </label>
+                                            <!-- Changed from <select> to <input type="text"> -->
+                                            <input type="text" name="sections[3][reason]" id="reason_3" 
+                                                   class="w-full bg-gray-500 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-gray-300" 
+                                                   placeholder="Enter your reason here" required>
+                                        </div>
                                         </div>
                                     </div>
                                 @endfor
@@ -141,6 +144,15 @@
             <button id="closeReportModal" class="absolute top-4 right-4 text-gray-300 hover:text-white text-2xl cursor-pointer bg-transparent border-none">&times;</button>
             <h2 class="text-xl font-bold mb-4">Concern Recorded</h2>
             <p class="text-lg">We have recorded your concern and the Admins will look into it.</p>
+        </div>
+    </div>
+
+    <!-- New Hint Modal -->
+    <div id="hintModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-1000 hidden">
+        <div class="bg-gray-800 p-8 rounded-lg shadow-lg max-w-md w-full text-white relative text-center">
+            <button id="closeHintModal" class="absolute top-4 right-4 text-gray-300 hover:text-white text-2xl cursor-pointer bg-transparent border-none">&times;</button>
+            <h2 class="text-xl font-bold mb-4">Hint</h2>
+            <p class="text-lg">Consider the source and its potential biases when evaluating the information.</p>
         </div>
     </div>
 
@@ -263,6 +275,48 @@
                     hideReportModal();
                 }
             });
+
+            // Hint Modal Logic
+            const openHintButton = document.getElementById('openHintButton');
+            const closeHintModal = document.getElementById('closeHintModal');
+            const hintModal = document.getElementById('hintModal');
+
+            function showHintModal() {
+                hintModal.classList.remove('hidden');
+            }
+
+            function hideHintModal() {
+                hintModal.classList.add('hidden');
+            }
+
+            openHintButton.addEventListener('click', showHintModal);
+            closeHintModal.addEventListener('click', hideHintModal);
+
+            hintModal.addEventListener('click', function(event) {
+                if (event.target === hintModal) {
+                    hideHintModal();
+                }
+            });
+
+            // Hint Button Visibility Timer with smooth animation
+            function toggleHintButtonVisibility() {
+                if (openHintButton.classList.contains('opacity-0')) {
+                    // Currently hidden, make it visible
+                    openHintButton.classList.remove('opacity-0', 'invisible');
+                    openHintButton.classList.add('opacity-100', 'visible');
+                } else {
+                    // Currently visible, make it hidden
+                    openHintButton.classList.remove('opacity-100', 'visible');
+                    openHintButton.classList.add('opacity-0', 'invisible');
+                }
+            }
+
+            // Start the interval: toggle visibility every 5 seconds
+            setInterval(toggleHintButtonVisibility, 5000);
+            
+            // The button's HTML already sets it to opacity-0 and invisible,
+            // so no need for initial class manipulation here.
+            // It will remain hidden for the first 5 seconds, then fade in.
         });
     </script>
 </x-app-layout>

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 
 class QuestionApiController extends Controller
 {
-    public function store(Request $request)
+   public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -25,6 +25,11 @@ class QuestionApiController extends Controller
             'section_data.*.value' => 'required|boolean',
             'section_data.*.reason' => 'required|string',
             'difficulty' => 'required|string',
+            'hint' => 'nullable|string',
+            'answer' => 'nullable|boolean',
+            'disinfo_pattern_card' => 'nullable|string',
+            'feedback' => 'nullable|string',
+            'pause_and_reflect' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -37,13 +42,10 @@ class QuestionApiController extends Controller
         try {
             $imagePath = null;
             if ($request->hasFile('image')) {
-                // Use Laravel's Storage facade instead of direct file handling
                 $file = $request->file('image');
                 $filename = time() . '_' . $file->getClientOriginalName();
-                
-                // Store file using Storage facade
                 $path = $file->storeAs('questions', $filename, 'public');
-                $imagePath = $filename; // Store only filename
+                $imagePath = $filename;
             }
 
             $question = Question::create([
@@ -52,6 +54,11 @@ class QuestionApiController extends Controller
                 'section_count' => $request->section_count,
                 'section_data' => $request->section_data,
                 'difficulty' => $request->difficulty,
+                'hint' => $request->hint,
+                'answer' => $request->answer,
+                'disinfo_pattern_card' => $request->disinfo_pattern_card,
+                'feedback' => $request->feedback,
+                'pause_and_reflect' => $request->pause_and_reflect,
             ]);
 
             return response()->json([
@@ -67,6 +74,7 @@ class QuestionApiController extends Controller
             ], 500);
         }
     }
+
 
     public function submit(Request $request, Question $question)
     {

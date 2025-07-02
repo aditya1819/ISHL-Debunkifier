@@ -8,4 +8,12 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    server: {
+        https: true, // Keep false for local dev
+        host: '0.0.0.0', // Important for Docker
+        port: 5173,
+        hmr: {
+            host: 'localhost',
+        },
+    }
 });

@@ -27,6 +27,10 @@ class Question extends Model
         'section_data' => 'array',
         'difficulty' => 'string',
         'answer' => 'boolean',
+        'hint' => 'string',
+        'disinfo_pattern_card' => 'string',
+        'feedback' => 'string',
+        'pause_and_reflect' => 'string',
     ];
 
     // Accessor to get image URL

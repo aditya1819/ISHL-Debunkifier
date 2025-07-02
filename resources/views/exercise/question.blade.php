@@ -103,7 +103,7 @@
                                 @endfor
 
                                 <div class="pt-4">
-                                    <button type="submit" 
+                                    <button type="submit" id="submitAllAnswersBtn"
                                             class="w-full bg-blue-700 hover:bg-blue-500 shadow-lg shadow-gray-900 text-white font-bold py-3 px-4 rounded-lg transition duration-300">
                                         Submit All Answers
                                     </button>
@@ -152,7 +152,21 @@
         <div class="bg-gray-800 p-8 rounded-lg shadow-lg max-w-md w-full text-white relative text-center">
             <button id="closeHintModal" class="absolute top-4 right-4 text-gray-300 hover:text-white text-2xl cursor-pointer bg-transparent border-none">&times;</button>
             <h2 class="text-xl font-bold mb-4">Hint</h2>
-            <p class="text-lg">Consider the source and its potential biases when evaluating the information.</p>
+            <p class="text-lg">{{ $question->hint }}</p>
+        </div>
+    </div>
+
+    <!-- New Pause and Reflect Modal -->
+    <div id="pauseReflectModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-1000 hidden">
+        <div class="bg-gray-800 p-8 rounded-lg shadow-lg max-w-md w-full text-white relative text-center">
+            <button id="closePauseReflectModal" class="absolute top-4 right-4 text-gray-300 hover:text-white text-2xl cursor-pointer bg-transparent border-none">&times;</button>
+            <h2 class="text-2xl font-bold mb-4">Pause and Reflect</h2>
+            <p class="text-lg mb-6">Before submitting, take a moment to review your answers.</p>
+            <br>
+            <p class="text-lg mb-6">{{ $question->pause_and_reflect }}</p>
+            <button id="confirmSubmitBtn" class="bg-blue-700 hover:bg-blue-500 text-white text-lg font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-lg">
+                Okay! Submit
+            </button>
         </div>
     </div>
 
@@ -161,15 +175,22 @@
         document.addEventListener('DOMContentLoaded', function () {
             const form = document.getElementById('exercise-form');
             const statusDiv = document.getElementById('status-message');
+            const submitAllAnswersBtn = document.getElementById('submitAllAnswersBtn'); // Get the submit button
 
-            form.addEventListener('submit', async function (e) {
-                e.preventDefault();
+            // New Modal Elements
+            const pauseReflectModal = document.getElementById('pauseReflectModal');
+            const closePauseReflectModalBtn = document.getElementById('closePauseReflectModal');
+            const confirmSubmitBtn = document.getElementById('confirmSubmitBtn');
+
+            // Function to handle the actual form submission
+            async function submitForm() {
+                pauseReflectModal.classList.add('hidden'); // Hide the modal
                 statusDiv.innerHTML = ''; // clear previous messages
 
                 const formData = new FormData(form);
 
                 try {
-                    const response = await fetch(form.action, {
+                   const response = await fetch(form.action, {
                         method: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
@@ -183,7 +204,6 @@
                     }
 
                     const data = await response.json();
-
                     // Build message div with pass/fail logic
                     const messageDiv = document.createElement('div');
                     messageDiv.className = data.status === 'pass'
@@ -194,20 +214,21 @@
 
                     if (data.status === 'pass') {
                         messageDiv.innerHTML = `
-                            <p>Right answer.  Want to Learn more through our expert solution?</p>
+                            <p>Right answer. Want to Learn more through our expert solution?</p>
                             <div class="mt-2 space-x-4">
                                 <a href="{{ route('exercise.expert-solution', $question) }}" class="bg-gray-800 hover:bg-gray-600 px-4 py-2 rounded inline-block">Reveal Solution</a>
                             </div>
                         `;
                     } else {
                         messageDiv.innerHTML = `
-                            <p>Wrong answer.  Want to try again or Check our expert solution?</p>
+                            <p>Wrong answer. Want to try again or Check our expert solution?</p>
                             <div class="mt-2 space-x-4">
+                                <button id="try-again-btn" class="bg-gray-800 hover:bg-gray-600 px-4 py-2 rounded inline-block">Try Again</button>
+                                <p>Here is a Feedback for you: {{ $question->feedback }}</p>
                                 <a href="{{ route('exercise.expert-solution', $question) }}" class="bg-gray-800 hover:bg-gray-600 px-4 py-2 rounded inline-block">Reveal Solution</a>
                             </div>
                         `;
 
-                        // Add event listener to reset form on try again
                         setTimeout(() => {
                             const tryAgainBtn = document.getElementById('try-again-btn');
                             if (tryAgainBtn) {
@@ -216,19 +237,41 @@
                                     statusDiv.innerHTML = '';
                                 });
                             }
-                        }, 100);
+                        }, 0);
                     }
-
                     statusDiv.appendChild(messageDiv);
                 } catch (error) {
                     statusDiv.innerHTML = `
                         <div class="bg-red-700 font-semibold shadow-lg shadow-gray-900 text-white px-6 py-4 rounded mb-6">
                             <p>Submission failed. Please try again later.</p>
+                            <p>Here is a Feedback for you: {{ $question->feedback }}</p>
                         </div>
                     `;
+                    console.error('Error during form submission:', error);
+                }
+            }
+
+            // Event listener for the original submit button
+            submitAllAnswersBtn.addEventListener('click', async function (e) {
+                e.preventDefault(); // Prevent default form submission
+                pauseReflectModal.classList.remove('hidden'); // Show the "Pause and Reflect" modal
+            });
+
+            // Event listener for "Okay! Submit" button inside the modal
+            confirmSubmitBtn.addEventListener('click', submitForm);
+
+            // Event listener for closing the "Pause and Reflect" modal
+            closePauseReflectModalBtn.addEventListener('click', function() {
+                pauseReflectModal.classList.add('hidden');
+            });
+
+            // Close modal if user clicks outside of the modal content
+            pauseReflectModal.addEventListener('click', function(event) {
+                if (event.target === pauseReflectModal) {
+                    pauseReflectModal.classList.add('hidden');
                 }
             });
-        
+
             // Modal Logic
             const openModalBtn = document.getElementById('openChecklistModal');
             const closeModalBtn = document.getElementById('closeChecklistModal');

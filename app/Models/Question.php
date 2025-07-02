@@ -13,12 +13,14 @@ class Question extends Model
         'image',
         'possible_reasons',
         'section_count',
-        'section_data'
+        'section_data',
+        'difficulty'
     ];
 
     protected $casts = [
         'possible_reasons' => 'array',
-        'section_data' => 'array'
+        'section_data' => 'array',
+        'difficulty' => 'string'
     ];
 
     // Accessor to get image URL

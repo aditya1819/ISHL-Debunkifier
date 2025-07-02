@@ -31,16 +31,16 @@
                                           <div class="flex items-center gap-4">
                                               <div class="text-right">
                                                    <span class="text-sm font-medium px-2 py-1 rounded-full
-                                                      @if(strtolower('easy') == 'easy') 
+                                                      @if(strtolower($question->difficulty) == 'easy') 
                                                           bg-green-100 text-green-800
-                                                      @elseif(strtolower('') == 'medium') 
+                                                      @elseif(strtolower($question->difficulty) == 'medium') 
                                                           bg-yellow-100 text-yellow-800
-                                                      @elseif(strtolower('hard') == 'hard') 
+                                                      @elseif(strtolower($question->difficulty) == 'hard') 
                                                           bg-red-100 text-red-800
                                                       @else 
                                                           bg-gray-100 text-gray-800
                                                       @endif">
-                                                      {{ 'Easy' }}
+                                                      {{ $question->difficulty }}
                                                   </span>
                                               </div>
                                               <div class="text-gray-400">

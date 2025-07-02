@@ -23,7 +23,8 @@ class QuestionApiController extends Controller
             'section_data' => 'required|array',
             'section_data.*.id' => 'required|integer',
             'section_data.*.value' => 'required|boolean',
-            'section_data.*.reason' => 'required|string'
+            'section_data.*.reason' => 'required|string',
+            'difficulty' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -49,7 +50,8 @@ class QuestionApiController extends Controller
                 'image' => $imagePath,
                 'possible_reasons' => $request->possible_reasons,
                 'section_count' => $request->section_count,
-                'section_data' => $request->section_data
+                'section_data' => $request->section_data,
+                'difficulty' => $request->difficulty,
             ]);
 
             return response()->json([

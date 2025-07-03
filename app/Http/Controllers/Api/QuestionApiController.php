@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
+use Illuminate\Support\Facades\Log;
+
 class QuestionApiController extends Controller
 {
    public function store(Request $request)
@@ -79,43 +81,27 @@ class QuestionApiController extends Controller
     public function submit(Request $request, Question $question)
     {
 
+                Log::info('Incoming Request Data:', $request->all());
+                        Log::info('Question Model Data:', $question->toArray());
         // Step 1: Validate basic structure
         $validated = $request->validate([
-            'sections' => 'required|array',
-            'sections.*.section_id' => 'required|integer',
-            'sections.*.answer' => 'required|string',
-            'sections.*.reason' => 'required|string',
+            'common_answer' => 'required|string'
         ]);
 
-        $submittedSections = $validated['sections'];
-        
-        $correctSections = collect($question->section_data); // array of section definitions
+        $common_answer_string = $validated['common_answer'];
 
-        $isPass = true;
 
-        foreach ($submittedSections as $sectionInput) {
-            $sectionId = $sectionInput['section_id'];
+        // Convert the string answer from the frontend to an integer (1 for True, 0 for False)
+        // This assumes $question->answer stores 1 for 'True' and 0 for 'False'
+        $common_answer_int = ($common_answer_string === 'Seems True') ? true : false;
 
-            if ($sectionInput['answer'] === 'Seems True') {
-                $sectionInput['answer'] = true;
-            } elseif ($sectionInput['answer'] === 'Seems False') {
-                $sectionInput['answer'] = false;
-            }
+        $isPass = false;
 
-            // Find the matching section from the question's data
-            $correct = $correctSections->firstWhere('id', $sectionId);
-
-            // If not found or mismatched, mark as fail
-            if (
-                !$correct ||
-                $correct['value'] !== $sectionInput['answer'] ||
-                $correct['reason'] !== $sectionInput['reason']
-            ) {
-                $isPass = false;
-                break; // If any section is wrong, no need to continue
-            }
+        // Now compare the integer values
+        if ($common_answer_int === $question->answer) {
+            $isPass = true;
         }
-
+        
         // Step 5: Save the attempt
         QuestionAttempt::updateOrCreate(
             ['user_id' => Auth::id(), 'question_id' => $question->id],

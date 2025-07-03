@@ -58,9 +58,25 @@
                                 Checklist
                             </button>
                             
+                          
                             
                             <form id="exercise-form" method="POST" action="{{ route('exercise.question.submit', $question) }}" class="space-y-6">
                                 @csrf
+
+                                  <!-- New Common Answer Radio Buttons -->
+                                <div class="bg-gray-800 p-4 rounded-lg shadow-lg shadow-gray-900 text-white mb-6">
+                                    <h4 class="font-medium mb-4">Common Answer</h4>
+                                    <div class="flex justify-around space-x-4">
+                                        <div>
+                                            <input type="radio" id="common_answer_true" name="common_answer" value="Seems True" class="mr-2" required>
+                                            <label for="common_answer_true">True</label>
+                                        </div>
+                                        <div>
+                                            <input type="radio" id="common_answer_false" name="common_answer" value="Seems False" class="mr-2">
+                                            <label for="common_answer_false">False</label>
+                                        </div>
+                                    </div>
+                                </div>
                                 
                                 <!-- Dynamic Section Forms -->
                                 @for($i = 1; $i <= $question->section_count; $i++)
@@ -69,34 +85,14 @@
                                         
                                         <div class="space-y-4">
                                             <input type="hidden" name="sections[{{ $i }}][section_id]" value="{{ $i }}">
-                                            
                                             <div>
-                                                <label for="answer_{{ $i }}" class="block text-sm font-medium mb-2">
-                                                    Answer
+                                                <label for="reason_3" class="block text-sm font-medium mb-2">
+                                                    Reason
                                                 </label>
-                                                <select name="sections[{{ $i }}][answer]" id="answer_{{ $i }}" 
-                                                        class="w-full bg-gray-500 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                                                    <option value="">Select an answer</option>
-                                                    <option value="Seems True" {{ old("sections.{$i}.answer") == 'Seems True' ? 'selected' : '' }}>
-                                                        Seems True
-                                                    </option>
-                                                    <option value="Seems False" {{ old("sections.{$i}.answer") == 'Seems False' ? 'selected' : '' }}>
-                                                        Seems False
-                                                    </option>
-                                                </select>
-                                                @error("sections.{$i}.answer")
-                                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-                                                @enderror
-                                            </div>
-
-                                            <div>
-                                            <label for="reason_3" class="block text-sm font-medium mb-2">
-                                                Reason
-                                            </label>
-                                            <!-- Changed from <select> to <input type="text"> -->
-                                            <input type="text" name="sections[3][reason]" id="reason_3" 
-                                                   class="w-full bg-gray-500 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-gray-300" 
-                                                   placeholder="Enter your reason here" required>
+                                                <!-- Changed from <select> to <input type="text"> -->
+                                                <input type="text" name="sections[3][reason]" id="reason_3" 
+                                                    class="w-full bg-gray-500 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-gray-300" 
+                                                    placeholder="Enter your reason here" required>
                                         </div>
                                         </div>
                                     </div>

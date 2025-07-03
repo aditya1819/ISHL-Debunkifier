@@ -24,11 +24,14 @@
                                 <a href="{{ route('exercise.question', $question) }}" class="block hover:text-blue-500">
                                     <div class="flex items-center justify-between">
                                         <div>
-                                            <h3 class="text-xl font-medium text-white">Question #{{ $question->id }}</h3>
+                                            <div class="flex">
+                                                <h3 class="text-xl font-medium text-white">Question #{{ $question->id }}</h3>
+                                                <h3 class=" text-white bg-violet-600 rounded-lg ml-3 px-2 h-fit">{{ $question->disinfo_pattern_card }}</h3>
+                                            </div>
                                             <p class="text-gray-300 text-sm">{{ $question->section_count }} sections</p>
 
                                             @if ($question->userAttempt)
-                                                <p class="text-sm mt-1 p-1 px-2 rounded-lg {{ $question->userAttempt->result === 'pass' ? ' text-green-700 bg-green-200' : 'text-red-700 bg-red-200' }}">
+                                                <p class="text-sm mt-1 p-1 px-2 rounded-lg w-fit {{ $question->userAttempt->result === 'pass' ? ' text-green-700 bg-green-200' : 'text-red-700 bg-red-200' }}">
                                                     <span class="text-sm font-semibold">Attempted: </span>
                                                     <span class="font-semibold ">
                                                         {{ ucfirst($question->userAttempt->result) }}
@@ -40,12 +43,25 @@
                                         </div>
 
                                         <div class="flex items-center gap-4">
-                                            <div class="text-right">
-                                                <span class="text-sm font-medium px-2 py-1 rounded-full bg-green-100 text-green-800">
-                                                    Easy
-                                                </span>
-                                            </div>
-                                            <div class="text-gray-400">→</div>
+                                            <div class="flex items-center gap-4">
+                                              <div class="text-right">
+                                                   <span class="text-sm font-medium px-2 py-1 rounded-full
+                                                      @if(strtolower($question->difficulty) == 'easy') 
+                                                          bg-green-100 text-green-800
+                                                      @elseif(strtolower($question->difficulty) == 'medium') 
+                                                          bg-yellow-100 text-yellow-800
+                                                      @elseif(strtolower($question->difficulty) == 'hard') 
+                                                          bg-red-100 text-red-800
+                                                      @else 
+                                                          bg-gray-100 text-gray-800
+                                                      @endif">
+                                                      {{ ucfirst($question->difficulty) }}
+                                                  </span>
+                                              </div>
+                                              <div class="text-gray-400">
+                                                  →
+                                              </div>
+                                          </div>
                                         </div>
                                     </div>
                                 </a>

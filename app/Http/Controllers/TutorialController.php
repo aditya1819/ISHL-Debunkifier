@@ -10,7 +10,8 @@ class TutorialController extends Controller
 {
     public function index()
     {
-        $questions = Tutorial::all();
+        // Fetch all tutorials, ordered by their ID
+        $questions = Tutorial::orderBy('id')->get();
         return view('tutorial.index', compact('questions'));
     }
 }

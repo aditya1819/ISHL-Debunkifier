@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Question;
 use App\Models\QuestionAttempt;
+use App\Models\Tutorial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -112,5 +113,14 @@ class QuestionApiController extends Controller
             'status' => $isPass ? 'pass' : 'fail',
             'message' => $isPass ? 'Congratulations! You passed.' : 'Sorry, you did not pass.',
         ]);
+    }
+
+    public function storeTutorial(Request $request, Question $question) {
+        $tutorial = Tutorial::create($request->all());
+
+        return response()->json([
+            'message' => 'Tutorial created successfully.',
+            'data' => $tutorial
+        ], 201);
     }
 }

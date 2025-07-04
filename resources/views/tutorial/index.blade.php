@@ -24,10 +24,10 @@
                                   <a href="{{ route('tutorial.question', $question) }}"
                                     class="block hover:text-blue-600">
                                       <div class="flex items-center justify-between">
-                                          <div>
-                                              <h3 class="text-xl font-medium text-white">Question #{{ $question->id }}</h3>
-                                              <p class="text-gray-300 text-sm">{{ $question->section_count }} sections</p>
-                                          </div>
+                                          <div class="flex">
+                                                <h3 class="text-xl font-medium text-white">{{ $question->name }}</h3>
+                                                <h3 class=" text-white bg-violet-600 rounded-lg ml-3 px-2 h-fit">{{ $question->disinfo_pattern_card }}</h3>
+                                            </div>
                                           <div class="flex items-center gap-4">
                                               <div class="text-right">
                                                    <span class="text-sm font-medium px-2 py-1 rounded-full
@@ -40,7 +40,7 @@
                                                       @else 
                                                           bg-gray-100 text-gray-800
                                                       @endif">
-                                                      {{ $question->difficulty }}
+                                                      {{ ucfirst($question->difficulty) }}
                                                   </span>
                                               </div>
                                               <div class="text-gray-400">

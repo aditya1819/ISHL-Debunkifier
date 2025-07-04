@@ -18,7 +18,7 @@
                     <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
                         <!-- Image Section -->
                         <div class="lg:col-span-3">
-                            <h3 class="text-3xl font-semibold mb-4 p-2">Tutorial Question Image</h3>
+                            <h3 class="text-3xl font-semibold mb-4 p-2">Tutorial: {{ $question->name }}</h3>
                             @if($question->image)
                                 <img src="{{ $question->image_url }}"
                                      alt="Question Image" 
@@ -32,17 +32,29 @@
                                     </p>
                                 </div>
                             @endif
+
+                            <div class="text-center mt-6">
+                                <p class="text-gray-300 text-lg">
+                                    Found the question to be offensive? Or needs further review by the Admins?
+                                    <a href="#" id="openReportModal" class="text-blue-400 hover:text-blue-200 underline cursor-pointer">
+                                        Click here to Request it
+                                    </a>
+                                </p>
+                            </div>
                         </div>
 
                         <!-- Form Section -->
                         <div class="lg:col-span-1 bg-slate-600 p-4 rounded-lg shadow-lg  shadow-gray-900">
                             <h3 class="text-3xl font-semibold mb-2 border-b-4 border-dotted border-white p-2">Explanation</h3>
                             <br>
-
                             <div>
-                                <p class="text-lg">
-                                    Consider the source → Is this a trustworthy publication? Do you know it, or should you do some quick research first? Check its track record, ownership and credibility before trusting the headline
-                                </p>
+                                <p class="text-lg">{{ $question->explaination }}</p>
+                            </div>
+
+                            <h3 class="text-3xl font-semibold mb-2 border-b-4 border-dotted border-white p-2">Sidenote</h3>
+                            <br>
+                            <div>
+                                <p class="text-lg">{{ $question->side_note }}</p>
                             </div>
 
                             <div>
@@ -54,4 +66,40 @@
             </div>
         </div>
     </div>
+
+
+    <!-- New Report Concern Modal -->
+    <div id="reportConcernModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-1000 hidden">
+        <div class="bg-gray-800 p-8 rounded-lg shadow-lg max-w-sm w-full text-white relative text-center">
+            <button id="closeReportModal" class="absolute top-4 right-4 text-gray-300 hover:text-white text-2xl cursor-pointer bg-transparent border-none">&times;</button>
+            <h2 class="text-xl font-bold mb-4">Concern Recorded</h2>
+            <p class="text-lg">We have recorded your concern and the Admins will look into it.</p>
+        </div>
+    </div>
+
+    <script>
+
+                    const openReportModalBtn = document.getElementById('openReportModal');
+            const closeReportModalBtn = document.getElementById('closeReportModal');
+            const reportConcernModal = document.getElementById('reportConcernModal');
+
+            function showReportModal() {
+                reportConcernModal.classList.remove('hidden');
+            }
+
+            function hideReportModal() {
+                reportConcernModal.classList.add('hidden');
+            }
+
+            openReportModalBtn.addEventListener('click', showReportModal);
+            closeReportModalBtn.addEventListener('click', hideReportModal);
+
+            reportConcernModal.addEventListener('click', function(event) {
+                if (event.target === reportConcernModal) {
+                    hideReportModal();
+                }
+            });
+
+
+    </script>
 </x-app-layout>

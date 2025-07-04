@@ -12,3 +12,5 @@ Route::post('/questions', [QuestionApiController::class, 'store']);
 Route::get('/question', function () {
     return response()->json(['question' => 'What is Laravel?']);
 });
+
+Route::post('/tutorials', [QuestionApiController::class,'storeTutorial']);

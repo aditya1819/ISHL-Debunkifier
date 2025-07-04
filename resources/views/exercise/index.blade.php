@@ -38,7 +38,7 @@
                                                     </span>
                                                 </p>
                                             @else
-                                                <p class="text-sm mt-1 p-1 px-2 rounded-lg text-yellow-700 bg-yellow-200">Not attempted yet</p>
+                                                <p class="text-sm mt-1 p-1 px-2 rounded-lg text-yellow-700 bg-yellow-200 w-fit">Not attempted yet</p>
                                             @endif
                                         </div>
 

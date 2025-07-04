@@ -25,7 +25,7 @@ class QuestionApiController extends Controller
             'section_count' => 'required|integer|min:1',
             'section_data' => 'required|array',
             'section_data.*.id' => 'required|integer',
-            'section_data.*.value' => 'required|boolean',
+            'section_data.*.value' => 'required|string',
             'section_data.*.reason' => 'required|string',
             'difficulty' => 'required|string',
             'hint' => 'nullable|string',

@@ -18,7 +18,7 @@
                             <div class="relative"> 
 
                                 <div class="w-full bg-amber-500 rounded-lg shadow-lg  shadow-gray-900 flex items-center justify-center">
-                                    <img class="w-3/4 rounded-lg  transition duration-300 ease-in-out transform hover:scale-105 shadow-lg shadow-slate-700 hover:shadow-slate-900" src={{ asset('images/exercise/' . $question->id . '.png') }}></img>
+                                    <img class="w-3/4 m-2 rounded-lg  transition duration-300 ease-in-out transform hover:scale-105 shadow-lg shadow-slate-700 hover:shadow-slate-900" src={{ asset('images/exercise/' . $question->id . '.png') }}></img>
                                 </div>
 
                                 <!-- New Hint Button - now positioned absolutely within the image section -->

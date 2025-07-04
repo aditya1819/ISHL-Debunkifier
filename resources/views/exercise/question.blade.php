@@ -211,9 +211,8 @@
                         messageDiv.innerHTML = `
                             <p>Wrong answer. Want to try again or Check our expert solution?</p>
                             <div class="mt-2 space-x-4">
-                                <button id="try-again-btn" class="bg-gray-800 hover:bg-gray-600 px-4 py-2 rounded inline-block">Try Again</button>
                                 <p>Here is a Feedback for you: {{ $question->feedback }}</p>
-                                <a href="{{ route('exercise.expert-solution', $question) }}" class="bg-gray-800 hover:bg-gray-600 px-4 py-2 rounded inline-block">Reveal Solution</a>
+                                <a href="{{ route('exercise.expert-solution', $question) }}" class="bg-gray-800 hover:bg-gray-600 px-2 py-2 rounded inline-block">Reveal Solution</a>
                             </div>
                         `;
 

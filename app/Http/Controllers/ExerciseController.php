@@ -13,9 +13,9 @@ class ExerciseController extends Controller
         return view('exercise.index', compact('questions'));
     }
 
-    public function expertSolution($questionId)
+    public function expertSolution(Question $question)
     {
-        return view('exercise.expert-solution');
+        return view('exercise.expert-solution', compact('question'));
     }
 
 }

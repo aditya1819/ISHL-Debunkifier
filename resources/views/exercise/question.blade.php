@@ -16,24 +16,16 @@
                         <div class="lg:col-span-3">
                             <h3 class="text-3xl font-semibold mb-4 p-2">Exercise Question Image</h3>
                             <div class="relative"> 
-                                @if($question->image)
-                                    <img src="{{ $question->image_url }}"
-                                        alt="Question Image" 
-                                        class="w-full h-auto rounded-lg border border-gray-200">
-                                @else
-                                    <div class="w-full bg-amber-500 rounded-lg shadow-lg  shadow-gray-900 flex items-center justify-center">
-                                        <p class="text-gray-500 m-4 p-4">
-                                            <img class="h-[32rem] rounded-lg  transition duration-300 ease-in-out transform hover:scale-105 shadow-lg shadow-slate-700 hover:shadow-slate-900" src="https://cepr.org/sites/default/files/styles/16_9_small/public/2024-05/AdobeStock_237772243.jpeg"></img>
-                                        </p>
-                                    </div>
-                                @endif
+
+                                <div class="w-full bg-amber-500 rounded-lg shadow-lg  shadow-gray-900 flex items-center justify-center">
+                                    <img class="w-3/4 rounded-lg  transition duration-300 ease-in-out transform hover:scale-105 shadow-lg shadow-slate-700 hover:shadow-slate-900" src={{ asset('images/exercise/' . $question->id . '.png') }}></img>
+                                </div>
 
                                 <!-- New Hint Button - now positioned absolutely within the image section -->
                                 <button id="openHintButton"
                                             class="absolute top-4 right-4 bg-indigo-600 hover:bg-indigo-500 text-white text-lg font-bold py-2 px-4 rounded-lg transition-opacity duration-500 shadow-lg opacity-0 invisible">
                                         Need Hint?
                                 </button>
-
                             </div>
 
                             <!-- New text link for reporting offensive questions -->

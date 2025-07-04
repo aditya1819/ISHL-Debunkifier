@@ -18,17 +18,10 @@
                     <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
                         <div class="lg:col-span-3">
                             <h3 class="text-3xl font-semibold mb-4 p-2">Tutorial {{ $question->id }}: {{ $question->name }}</h3>
-                            @if($question->image)
-                                <img src="{{ $question->image_url }}"
-                                    alt="Question Image"
-                                    class="w-full h-auto rounded-lg border border-gray-200">
-                            @else
                                 <div class="w-full bg-amber-500 rounded-lg shadow-lg shadow-gray-900 flex items-center justify-center">
-                                    <p class="text-gray-500 m-4 p-4">
-                                        <img class="h-96 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-lg shadow-slate-700 hover:shadow-slate-900" src="https://cepr.org/sites/default/files/styles/16_9_small/public/2024-05/AdobeStock_237772243.jpeg"></img>
-                                    </p>
+                                        {{-- w-3/4 h-auto mx-auto rounded-lg border border-gray-200 --}}
+                                        <img class="w-3/4 m-2 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow-lg shadow-slate-700 hover:shadow-slate-900" src={{ asset('images/tutorial/' . $question->id . '.png') }}></img>
                                 </div>
-                            @endif
 
                             <div class="text-center mt-6">
                                 <p class="text-gray-300 text-lg">
@@ -40,7 +33,7 @@
                             </div>
                         </div>
 
-                        <div class="lg:col-span-1 bg-slate-600 p-4 rounded-lg shadow-lg shadow-gray-900">
+                        <div class="lg:col-span-1 h-min  bg-slate-600 p-4 rounded-lg shadow-lg shadow-gray-900 mt-16">
                             <h3 class="text-3xl font-semibold mb-2 border-b-4 border-dotted border-white p-2">Explanation</h3>
                             <br>
                             <div>

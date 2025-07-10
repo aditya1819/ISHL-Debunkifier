@@ -86,3 +86,24 @@ MIT License. See [LICENSE](https://opensource.org/licenses/MIT) for more details
 ### Dashboard
 
 ![Image](https://github.com/user-attachments/assets/7a68c115-d041-4864-a680-4126c28a2b45)
+
+### Tutorials
+![Image](https://github.com/user-attachments/assets/ac188c45-74dd-4a07-8051-023d6dcd9349)
+
+### Tutorial
+![Image](https://github.com/user-attachments/assets/85c2dd77-6215-49c0-a3f1-eca6ff11b2fa)
+
+### Jump to exercise
+![Image](https://github.com/user-attachments/assets/6445643d-64a6-4cab-9574-55fab2fd57c8)
+
+### Exercises
+![Image](https://github.com/user-attachments/assets/b24c84b7-bbac-47df-8806-9eb725b42f8b)
+
+### Exercise
+![Image](https://github.com/user-attachments/assets/623f3d38-05e6-401c-ae70-9393275c92ad)
+
+### Checklist
+![Image](https://github.com/user-attachments/assets/276bfc89-49f5-4c81-8d87-a545c8f7377f)
+
+### Expert Solution
+![Image](https://github.com/user-attachments/assets/dbc59408-0da2-4b8f-9dea-f4f669709d18)

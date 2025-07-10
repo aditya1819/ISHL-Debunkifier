@@ -80,3 +80,9 @@ To get started:
 ## 📃 License
 
 MIT License. See [LICENSE](https://opensource.org/licenses/MIT) for more details.
+
+## Application Images
+
+### Dashboard
+
+![Image](https://github.com/user-attachments/assets/7a68c115-d041-4864-a680-4126c28a2b45)
